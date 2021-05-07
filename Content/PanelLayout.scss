@@ -1,0 +1,105 @@
+﻿.PanelGrid {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 2rem;
+    padding: 1rem 0 1rem 0;
+    background-color: #edf1f4;
+
+    .GPanel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        border-radius: 1rem;
+        transition: box-shadow, border ease-in-out 0.1s;
+        background: linear-gradient(to bottom right, rgba(0,0,0,0.025), #edf1f4);
+        border: solid 0.5rem #edf1f4;
+        box-shadow: 0.75rem 0.75rem 1rem rgba(0,0,0,0.1),
+            -0.75rem -0.75rem 1rem #fff;
+
+        &:empty {
+            box-shadow: 0.75rem 0.75rem 1rem rgba(0,0,0,0.1),
+                -0.75rem -0.75rem 1rem #fff, 
+                inset -0.25rem -0.25rem 0.5rem rgba(255,255,255, 1), 
+                inset 0.25rem 0.25rem 0.5rem rgba(0,0,0,0.05);
+        }
+
+        &:not(.Static):hover {
+            border: solid 0.5rem rgba(0, 148, 255, 0.25);
+        }
+
+        .Content {
+            display: grid;
+            height: 100%;
+            width: 100%;
+            grid-template-rows: 3rem 1fr;
+            border-radius: 0.5rem;
+            transition: height, width ease-in-out 0.1s;
+
+            &.Moving {
+                position: absolute;
+                height: 3rem;
+                width: 3rem;
+                grid-template-rows: 3rem 0;
+
+                .Header * {
+                    height: 0px;
+                    width: 0px;
+                    overflow: hidden;
+                }
+
+                .Body {
+                    height: 0px;
+                    overflow: hidden;
+                }
+            }
+
+            .Header {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #C4C4C4;
+                border-radius: 0.5rem;
+                height: 3rem;
+                text-overflow: ellipsis;
+            }
+
+            .Body {
+                display: flex;
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+                background-color: #edf1f4;
+                border-radius: 0.5rem;
+            }
+        }
+
+        @for $start from 1 through 10 {
+            @for $end from 1 through 10 {
+                @if ($start <= $end) {
+                    &.C#{$start}-#{$end} {
+                        grid-column-start: $start;
+                        grid-column-end: $end + 1;
+                    }
+
+                    &.R#{$start}-#{$end} {
+                        grid-row-start: $start;
+                        grid-row-end: $end + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    @for $col from 1 through 10 {
+        @for $row from 1 through 10 {
+            &.C#{$col}-R#{$row} {
+                grid-template-columns: repeat($col, 1fr);
+                grid-template-rows: repeat($row, 1fr);
+            }
+        }
+    }
+}
