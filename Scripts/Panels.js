@@ -13,12 +13,16 @@ $(document).ready(function () {
     });
 
 
-    $(document.body).on("mousedown", ".Content", function (e) {
-        if (e.target.classList.contains('Header')) {
-            gpanel = e.target.parentElement;
-            gpanel.style.top = e.clientY + 'px';
-            gpanel.style.left = e.clientX + 'px';
-            gpanel.classList.add('Moving');
+    $(document.body).on("mousedown", "img", function (e) {
+        try {
+            if (e.target.parentElement.classList.contains('Move')) {
+                gpanel = e.target.parentElement.parentElement.parentElement.parentElement;
+                gpanel.style.top = e.clientY + 'px';
+                gpanel.style.left = e.clientX + 'px';
+                gpanel.classList.add('Moving');
+            }
+        } catch (e) {
+
         }
     });
 

@@ -19,42 +19,94 @@
     box-shadow: 0.75rem 0.75rem 1rem rgba(0, 0, 0, 0.1), -0.75rem -0.75rem 1rem #fff; }
     .PanelGrid .GPanel:empty {
       box-shadow: 0.75rem 0.75rem 1rem rgba(0, 0, 0, 0.1), -0.75rem -0.75rem 1rem #fff, inset -0.25rem -0.25rem 0.5rem white, inset 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.05); }
+    .PanelGrid .GPanel.Static .Content .Header .Move {
+      cursor: not-allowed; }
     .PanelGrid .GPanel:not(.Static):hover {
       border: solid 0.5rem rgba(0, 148, 255, 0.25); }
+      .PanelGrid .GPanel:not(.Static):hover .Content .Header .Move {
+        cursor: move; }
     .PanelGrid .GPanel .Content {
       display: grid;
       height: 100%;
       width: 100%;
-      grid-template-rows: 3rem 1fr;
+      grid-template-rows: 4rem 1fr;
       border-radius: 0.5rem;
       transition: height, width ease-in-out 0.1s; }
       .PanelGrid .GPanel .Content.Moving {
         position: absolute;
-        height: 3rem;
-        width: 3rem;
-        grid-template-rows: 3rem 0; }
-        .PanelGrid .GPanel .Content.Moving .Header * {
-          height: 0px;
-          width: 0px;
+        height: 4rem;
+        width: 4rem;
+        grid-template-rows: 4rem 0;
+        overflow: hidden; }
+        .PanelGrid .GPanel .Content.Moving .Header {
+          grid-template-columns: 3rem 0px 0px;
           overflow: hidden; }
+          .PanelGrid .GPanel .Content.Moving .Header .Title, .PanelGrid .GPanel .Content.Moving .Header .Toolbar {
+            display: none; }
         .PanelGrid .GPanel .Content.Moving .Body {
-          height: 0px;
-          overflow: hidden; }
+          height: 0px; }
+          .PanelGrid .GPanel .Content.Moving .Body * {
+            display: none; }
       .PanelGrid .GPanel .Content .Header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 3rem 1fr auto;
+        grid-template-rows: 3rem;
         background-color: #C4C4C4;
         border-radius: 0.5rem;
-        height: 3rem;
+        height: 4rem;
+        padding: 0.5rem;
         text-overflow: ellipsis; }
+        .PanelGrid .GPanel .Content .Header .Icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0.75rem;
+          background-color: #fff;
+          border-radius: 50%; }
+        .PanelGrid .GPanel .Content .Header .Title {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          font-size: 1.1em; }
+        .PanelGrid .GPanel .Content .Header .Toolbar {
+          display: grid;
+          grid-template-columns: 2rem 2rem 2rem;
+          grid-gap: 1rem;
+          align-content: center; }
+          .PanelGrid .GPanel .Content .Header .Toolbar .Button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            height: 2rem;
+            width: 2rem;
+            padding: 0.5rem;
+            border-radius: 50%; }
+            .PanelGrid .GPanel .Content .Header .Toolbar .Button.Close {
+              grid-column: 3 / 3;
+              background-color: red; }
+              .PanelGrid .GPanel .Content .Header .Toolbar .Button.Close:hover {
+                background-color: darkred; }
+            .PanelGrid .GPanel .Content .Header .Toolbar .Button.Move {
+              grid-column: 2 / 2;
+              padding: 0.25rem;
+              background-color: orange; }
+              .PanelGrid .GPanel .Content .Header .Toolbar .Button.Move:hover {
+                background-color: darkorange; }
+            .PanelGrid .GPanel .Content .Header .Toolbar .Button.Minimize {
+              grid-column: 1 / 1;
+              background-color: goldenrod; }
+              .PanelGrid .GPanel .Content .Header .Toolbar .Button.Minimize:hover {
+                background-color: darkgoldenrod; }
       .PanelGrid .GPanel .Content .Body {
         display: flex;
         height: 100%;
         justify-content: center;
         align-items: center;
         background-color: #edf1f4;
-        border-radius: 0.5rem; }
+        border-radius: 0.5rem;
+        padding: 1rem; }
     .PanelGrid .GPanel.C1-1 {
       grid-column-start: 1;
       grid-column-end: 2; }

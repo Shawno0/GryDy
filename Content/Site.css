@@ -6,7 +6,6 @@ body {
     height: 100%;
     display: grid;
     grid-template-rows: 50px 1fr 50px;
-    overflow: hidden;
     background-color: #edf1f4;
 }
 
@@ -30,4 +29,9 @@ footer {
 */
 .dl-horizontal dt {
     white-space: normal;
+}
+
+img {
+    height: 100%;
+    width: 100%;
 }
