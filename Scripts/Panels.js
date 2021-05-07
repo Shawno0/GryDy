@@ -1,5 +1,4 @@
-﻿var activePanel = null;
-var selectedPanel = null;
+﻿var selectedPanel = null;
 
 $(document).ready(function () {
     var gpanel = null;
@@ -17,9 +16,14 @@ $(document).ready(function () {
         try {
             if (e.target.parentElement.classList.contains('Move')) {
                 gpanel = e.target.parentElement.parentElement.parentElement.parentElement;
-                gpanel.style.top = e.clientY + 'px';
-                gpanel.style.left = e.clientX + 'px';
-                gpanel.classList.add('Moving');
+                if (!gpanel.parentElement.classList.contains('Static')) {
+                    gpanel.style.top = e.clientY + 'px';
+                    gpanel.style.left = e.clientX + 'px';
+                    gpanel.classList.add('Moving');
+                }
+                else {
+                    gpanel = null;
+                }
             }
         } catch (e) {
 
@@ -71,6 +75,19 @@ function GetGridPositions(cList) {
     }
 
     return gridPos;
+}
+
+function ToggleStatic(btn) {
+    var panel = btn.parentElement.parentElement.parentElement.parentElement;
+    panel.classList.toggle('Static');
+}
+
+function ClosePanel(btn) {
+    //TODO
+}
+
+function MinimizePanel(btn) {
+    //TODO
 }
 
 function PauseMouseEvents(e) {

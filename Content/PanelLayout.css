@@ -19,12 +19,18 @@
     box-shadow: 0.75rem 0.75rem 1rem rgba(0, 0, 0, 0.1), -0.75rem -0.75rem 1rem #fff; }
     .PanelGrid .GPanel:empty {
       box-shadow: 0.75rem 0.75rem 1rem rgba(0, 0, 0, 0.1), -0.75rem -0.75rem 1rem #fff, inset -0.25rem -0.25rem 0.5rem white, inset 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.05); }
+    .PanelGrid .GPanel.Static:hover {
+      border: solid 0.5rem rgba(255, 5, 5, 0.25); }
     .PanelGrid .GPanel.Static .Content .Header .Move {
       cursor: not-allowed; }
+    .PanelGrid .GPanel.Static .Content .Header .Lock img {
+      content: url(../Images/unlocked.svg); }
     .PanelGrid .GPanel:not(.Static):hover {
       border: solid 0.5rem rgba(0, 148, 255, 0.25); }
-      .PanelGrid .GPanel:not(.Static):hover .Content .Header .Move {
-        cursor: move; }
+    .PanelGrid .GPanel:not(.Static) .Content .Header .Move {
+      cursor: move; }
+    .PanelGrid .GPanel:not(.Static) .Content .Header .Lock img {
+      content: url(../Images/locked.svg); }
     .PanelGrid .GPanel .Content {
       display: grid;
       height: 100%;
@@ -51,6 +57,7 @@
         display: grid;
         grid-template-columns: 3rem 1fr auto;
         grid-template-rows: 3rem;
+        grid-gap: 1rem;
         background-color: #C4C4C4;
         border-radius: 0.5rem;
         height: 4rem;
@@ -65,35 +72,49 @@
           border-radius: 50%; }
         .PanelGrid .GPanel .Content .Header .Title {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           font-weight: bold;
-          font-size: 1.1em; }
+          font-size: 1.1em;
+          text-overflow: ellipsis;
+          overflow: hidden; }
         .PanelGrid .GPanel .Content .Header .Toolbar {
           display: grid;
-          grid-template-columns: 2rem 2rem 2rem;
-          grid-gap: 1rem;
-          align-content: center; }
+          grid-template-columns: 0 0 0 0 0 0 0 2rem;
+          align-content: center;
+          transition: grid-template-columns ease-in-out 0.5s; }
+          .PanelGrid .GPanel .Content .Header .Toolbar:hover {
+            grid-template-columns: 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem 0; }
+            .PanelGrid .GPanel .Content .Header .Toolbar:hover .Options {
+              transform: rotate(360deg); }
           .PanelGrid .GPanel .Content .Header .Toolbar .Button {
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            height: 2rem;
-            width: 2rem;
             padding: 0.5rem;
             border-radius: 50%; }
+            .PanelGrid .GPanel .Content .Header .Toolbar .Button.Options {
+              grid-column: 8 / 8;
+              padding: 0;
+              border-radius: 0;
+              background-color: #C4C4C4; }
             .PanelGrid .GPanel .Content .Header .Toolbar .Button.Close {
-              grid-column: 3 / 3;
+              grid-column: 7 / 7;
               background-color: red; }
               .PanelGrid .GPanel .Content .Header .Toolbar .Button.Close:hover {
                 background-color: darkred; }
             .PanelGrid .GPanel .Content .Header .Toolbar .Button.Move {
-              grid-column: 2 / 2;
+              grid-column: 5 / 5;
               padding: 0.25rem;
               background-color: orange; }
               .PanelGrid .GPanel .Content .Header .Toolbar .Button.Move:hover {
                 background-color: darkorange; }
+            .PanelGrid .GPanel .Content .Header .Toolbar .Button.Lock {
+              grid-column: 3 / 3;
+              background-color: green; }
+              .PanelGrid .GPanel .Content .Header .Toolbar .Button.Lock:hover {
+                background-color: darkgreen; }
             .PanelGrid .GPanel .Content .Header .Toolbar .Button.Minimize {
               grid-column: 1 / 1;
               background-color: goldenrod; }

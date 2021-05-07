@@ -1,5 +1,14 @@
 ﻿html {
     height: 100vh;
+    font-size: 62.5%;
+}
+
+* {
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -7,21 +16,39 @@ body {
     display: grid;
     grid-template-rows: 50px 1fr 50px;
     background-color: #edf1f4;
+    color: #090909;
+    font-family: arial;
 }
 
-.navbar {
+.Navbar {
     grid-row: 1 / 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #333333;
+    color: #fff;
+}
+
+.Navbar .Product span {
+    font-size: 1.6rem;
 }
 
 .body-content {
     height: 100%;
     grid-row: 2 / 2;
+    overflow: auto
 }
 
 footer {
     grid-row: 3 / 3;
     display: flex;
     align-items: center;
+    background-color: #333333;
+    color: #fff;
+}
+
+.body-content, .Navbar, footer {
+    padding: 0 10% 0 10%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
