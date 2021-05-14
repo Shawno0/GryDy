@@ -152,6 +152,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <None Include="Properties\PublishProfiles\Panel Layout - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Panel Layout - WiltonBrown.com FTP.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
