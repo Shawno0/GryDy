@@ -27,6 +27,7 @@
             &:hover {
                 border: solid 0.5rem rgba(255, 5, 5, 0.25);
             }
+
             .Content {
                 .Header {
                     .Move {
@@ -68,7 +69,6 @@
             width: 100%;
             grid-template-rows: 4rem 1fr;
             border-radius: 0.5rem;
-            transition: height, width ease-in-out 0.1s;
 
             &.Moving {
                 position: absolute;
@@ -127,28 +127,27 @@
 
                 .Toolbar {
                     display: grid;
-                    grid-template-columns: 0 0 0 0 0 0 0 2rem;
+                    //grid-template-columns: 0 0 0 0 0 0 0 0 2rem;
+                    grid-template-columns: 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem;
                     align-content: center;
-                    transition: grid-template-columns ease-in-out 0.5s;
 
                     &:hover {
-                        grid-template-columns: 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem 0;
-
-                        .Options {
-                            transform: rotate(360deg);
-                        }
+                        //grid-template-columns: 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem;
                     }
 
                     .Button {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        cursor: pointer;
                         padding: 0.5rem;
                         border-radius: 50%;
 
+                        &.Close, &.Minimize, &.Lock {
+                            cursor: pointer;
+                        }
+
                         &.Options {
-                            grid-column: 8 / 8;
+                            grid-column: 9 / 9;
                             padding: 0;
                             border-radius: 0;
                             background-color: #C4C4C4;
@@ -184,10 +183,10 @@
 
                         &.Minimize {
                             grid-column: 1 / 1;
-                            background-color: goldenrod;
+                            background-color: skyblue;
 
                             &:hover {
-                                background-color: darkgoldenrod;
+                                background-color: deepskyblue;
                             }
                         }
                     }
@@ -231,3 +230,86 @@
         }
     }
 }
+
+@keyframes Open-Toolbar {
+    0% {
+        grid-template-columns: 0 0 0 0 0 0 0 0 2rem;
+    }
+    10% {
+        grid-template-columns: 0.2rem 0.05rem 0.2rem 0.05rem 0.2rem 0.05rem 0.2rem 0.05rem 2rem;
+    }
+    20% {
+        grid-template-columns: 0.4rem 0.1rem 0.4rem 0.1rem 0.4rem 0.1rem 0.4rem 0.1rem 2rem;
+    }
+    30% {
+        grid-template-columns: 0.6rem 0.15rem 0.6rem 0.15rem 0.6rem 0.15rem 0.6rem 0.15rem 2rem;
+    }
+    40% {
+        grid-template-columns: 0.8rem 0.2rem 0.8rem 0.2rem 0.8rem 0.2rem 0.8rem 0.2rem 2rem;
+    }
+    50% {
+        grid-template-columns: 1rem 0.25rem 1rem 0.25rem 1rem 0.25rem 1rem 0.25rem 2rem;
+    }
+    60% {
+        grid-template-columns: 1.2rem 0.3rem 1.2rem 0.3rem 1.2rem 0.3rem 1.2rem 0.3rem 2rem;
+    }
+    70% {
+        grid-template-columns: 1.4rem 0.35rem 1.4rem 0.35rem 1.4rem 0.35rem 1.4rem 0.35rem 2rem;
+    }
+    80% {
+        grid-template-columns: 1.6rem 0.4rem 1.6rem 0.4rem 1.6rem 0.4rem 1.6rem 0.4rem 2rem;
+    }
+    90% {
+        grid-template-columns: 1.8rem 0.45rem 1.8rem 0.45rem 1.8rem 0.45rem 1.8rem 0.45rem 2rem;
+    }
+    100% {
+        grid-template-columns: 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem;
+    }
+}
+
+@keyframes Close-Toolbar {
+    100% {
+        grid-template-columns: 0 0 0 0 0 0 0 0 2rem;
+    }
+
+    90% {
+        grid-template-columns: 0.2rem 0.05rem 0.2rem 0.05rem 0.2rem 0.05rem 0.2rem 0.05rem 2rem;
+    }
+
+    80% {
+        grid-template-columns: 0.4rem 0.1rem 0.4rem 0.1rem 0.4rem 0.1rem 0.4rem 0.1rem 2rem;
+    }
+
+    70% {
+        grid-template-columns: 0.6rem 0.15rem 0.6rem 0.15rem 0.6rem 0.15rem 0.6rem 0.15rem 2rem;
+    }
+
+    60% {
+        grid-template-columns: 0.8rem 0.2rem 0.8rem 0.2rem 0.8rem 0.2rem 0.8rem 0.2rem 2rem;
+    }
+
+    50% {
+        grid-template-columns: 1rem 0.25rem 1rem 0.25rem 1rem 0.25rem 1rem 0.25rem 2rem;
+    }
+
+    40% {
+        grid-template-columns: 1.2rem 0.3rem 1.2rem 0.3rem 1.2rem 0.3rem 1.2rem 0.3rem 2rem;
+    }
+
+    30% {
+        grid-template-columns: 1.4rem 0.35rem 1.4rem 0.35rem 1.4rem 0.35rem 1.4rem 0.35rem 2rem;
+    }
+
+    20% {
+        grid-template-columns: 1.6rem 0.4rem 1.6rem 0.4rem 1.6rem 0.4rem 1.6rem 0.4rem 2rem;
+    }
+
+    10% {
+        grid-template-columns: 1.8rem 0.45rem 1.8rem 0.45rem 1.8rem 0.45rem 1.8rem 0.45rem 2rem;
+    }
+
+    0% {
+        grid-template-columns: 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem;
+    }
+}
+

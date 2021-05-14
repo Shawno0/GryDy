@@ -19,6 +19,9 @@ $(document).ready(function () {
                 if (!gpanel.parentElement.classList.contains('Static')) {
                     gpanel.style.top = e.clientY + 'px';
                     gpanel.style.left = e.clientX + 'px';
+                    // prevents weird overflow when the control is no longer bound by the size of the grid
+                    gpanel.style.maxHeight = '4rem';
+                    gpanel.style.maxWidth = '4rem';
                     gpanel.classList.add('Moving');
                 }
                 else {
@@ -32,9 +35,11 @@ $(document).ready(function () {
 
     $(document.body).on("mouseup", function (e) {
         if (gpanel != null) {
-            gpanel.classList.remove('Moving');
             gpanel.style.top = null;
             gpanel.style.left = null;
+            gpanel.style.maxHeight = null;
+            gpanel.style.maxWidth = null;
+            gpanel.classList.remove('Moving');
 
             UpdatePanelPosition(gpanel.parentElement);
         }
