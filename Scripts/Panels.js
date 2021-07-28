@@ -57,7 +57,7 @@ var _pGrid = function () {
 $(document).ready(function () {
     pGrid = new _pGrid();
 
-    $(document.body).on("mousemove", function (e) {
+    $(document.body).on("pointermove", function (e) {
         if (mPanel) {
             PauseMouseEvents(e);
             mPanel.style.top = e.clientY + 'px';
@@ -83,7 +83,7 @@ $(document).ready(function () {
     });
 
 
-    $(document.body).on("mousedown", "img", function (e) {
+    $(document.body).on("pointerdown", "img", function (e) {
         try {
             if (e.target.parentElement.classList.contains('Move')) {
                 mPanel = e.target.parentElement.parentElement.parentElement.parentElement;
@@ -104,7 +104,7 @@ $(document).ready(function () {
         }
     });
 
-    $(document.body).on("mousedown", ".Border", function (e) {
+    $(document.body).on("pointerdown", ".Border", function (e) {
         try {
             if (e.target.parentElement.classList.contains('Static')) {
                 rPanel = null;
@@ -146,7 +146,7 @@ $(document).ready(function () {
         }
     });
 
-    $(document.body).on("mouseup", function (e) {
+    $(document.body).on("pointerup", function (e) {
         if (mPanel != null) {
             mPanel.style.top = null;
             mPanel.style.left = null;
