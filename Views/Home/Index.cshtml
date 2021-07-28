@@ -3,7 +3,15 @@
 }
 
 <div class="PanelGrid C5-R3">
-    <div id="GPanel_1" class="GPanel C1-5 R1-1" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+    <div id="GPanel_1" class="GPanel" col="1-5" row="1-1" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Border Top"></div>
+        <div class="Border Right"></div>
+        <div class="Border Bottom"></div>
+        <div class="Border Left"></div>
         <div id="GPanel_1_Content" class="Content">
             <div class="Header">
                 <div class="Icon">
@@ -38,7 +46,15 @@
             </div>
         </div>
     </div>
-    <div id="GPanel_2" class="GPanel C1-1 R2-2" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+    <div id="GPanel_2" class="GPanel" col="1-1" row="2-2" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Border Top"></div>
+        <div class="Border Right"></div>
+        <div class="Border Bottom"></div>
+        <div class="Border Left"></div>
         <div id="GPanel_2_Content" class="Content">
             <div class="Header">
                 <div class="Icon">
@@ -73,7 +89,15 @@
             </div>
         </div>
     </div>
-    <div id="GPanel_3" class="GPanel C2-4 R2-2" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+    <div id="GPanel_3" class="GPanel" col="2-4" row="2-2" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Border Top"></div>
+        <div class="Border Right"></div>
+        <div class="Border Bottom"></div>
+        <div class="Border Left"></div>
         <div id="GPanel_3_Content" class="Content">
             <div class="Header">
                 <div class="Icon">
@@ -108,7 +132,15 @@
             </div>
         </div>
     </div>
-    <div id="GPanel_4" class="GPanel C5-5 R2-2" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+    <div id="GPanel_4" class="GPanel" col="5-5" row="2-2" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Border Top"></div>
+        <div class="Border Right"></div>
+        <div class="Border Bottom"></div>
+        <div class="Border Left"></div>
         <div id="GPanel_4_Content" class="Content">
             <div class="Header">
                 <div class="Icon">
@@ -143,7 +175,15 @@
             </div>
         </div>
     </div>
-    <div id="GPanel_5" class="GPanel Static C1-5 R3-3" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+    <div id="GPanel_5" class="GPanel Static" col="1-5" row="3-3" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Corner"></div>
+        <div class="Border Top"></div>
+        <div class="Border Right"></div>
+        <div class="Border Bottom"></div>
+        <div class="Border Left"></div>
         <div id="GPanel_5_Content" class="Content">
             <div class="Header">
                 <div class="Icon">
@@ -159,7 +199,7 @@
                     <div class="Button Lock" onclick="ToggleStatic(this);">
                         <img />
                     </div>
-                    <div class="Button Move">
+                    <div id="GPanel_5_Move" class="Button Move">
                         <img src="~/Images/move.svg" />
                     </div>
                     <div class="Button Close" onclick="ClosePanel(this);">

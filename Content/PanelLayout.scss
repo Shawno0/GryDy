@@ -8,15 +8,14 @@
     background-color: #edf1f4;
 
     .GPanel {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 0.5rem 1fr 0.5rem;
+        grid-template-rows: 0.5rem 1fr 0.5rem;
         height: 100%;
         width: 100%;
         border-radius: 1rem;
         transition: box-shadow, border ease-in-out 0.1s;
         background: linear-gradient(to bottom right, rgba(0,0,0,0.025), #edf1f4);
-        border: solid 0.5rem #edf1f4;
         box-shadow: 0.75rem 0.75rem 1rem rgba(0,0,0,0.1), -0.75rem -0.75rem 1rem #fff;
 
         &:empty {
@@ -25,7 +24,9 @@
 
         &.Static {
             &:hover {
-                border: solid 0.5rem rgba(255, 5, 5, 0.25);
+                .Border, .Corner {
+                    background-color: rgba(255, 5, 5, 0.25);
+                }
             }
 
             .Content {
@@ -45,7 +46,13 @@
 
         &:not(.Static) {
             &:hover {
-                border: solid 0.5rem rgba(0, 148, 255, 0.25);
+                .Border, .Corner {
+                    background-color: rgba(0, 148, 255, 0.25);
+                }
+
+                .Border:hover {
+                    background-color: rgba(0, 255, 0, 0.25) !important;
+                }
             }
 
             .Content {
@@ -63,12 +70,78 @@
             }
         }
 
+        &.Resizing {
+            position: absolute;
+        }
+
+        .Border {
+            width: 100%;
+            height: 100%;
+
+            &.Top {
+                grid-column: 2 / 3;
+                grid-row: 1 / 2;
+            }
+
+            &.Right {
+                grid-column: 3 / 4;
+                grid-row: 2 / 3;
+            }
+
+            &.Bottom {
+                grid-column: 2 / 3;
+                grid-row: 3 / 4;
+            }
+
+            &.Left {
+                grid-column: 1 / 2;
+                grid-row: 2 / 3;
+            }
+
+            &.Top, &.Bottom {
+                cursor: ns-resize;
+            }
+
+            &.Right, &.Left {
+                cursor: ew-resize;
+            }
+        }
+
+        .Corner {
+            &:nth-child(1) {
+                grid-column: 1 / 2;
+                grid-row: 1 / 2;
+                border-radius: 100% 0 0 0;
+            }
+
+            &:nth-child(2) {
+                grid-column: 3 / 4;
+                grid-row: 1 / 2;
+                border-radius: 0 100% 0 0;
+            }
+
+            &:nth-child(3) {
+                grid-column: 3 / 4;
+                grid-row: 3 / 4;
+                border-radius: 0 0 100% 0;
+            }
+
+            &:nth-child(4) {
+                grid-column: 1 / 2;
+                grid-row: 3 / 4;
+                border-radius: 0 0 0 100%;
+            }
+        }
+
         .Content {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
             display: grid;
             height: 100%;
             width: 100%;
             grid-template-rows: 4rem 1fr;
             border-radius: 0.5rem;
+            overflow: hidden;
 
             &.Moving {
                 position: absolute;
@@ -218,6 +291,7 @@
                 background-color: #edf1f4;
                 border-radius: 0.5rem;
                 padding: 1rem;
+                overflow: hidden;
 
                 .Image {
                     display: flex;
@@ -232,6 +306,7 @@
                 }
 
                 .Text {
+                    overflow-y: auto;
                 }
             }
         }
@@ -239,12 +314,12 @@
         @for $start from 1 through 10 {
             @for $end from 1 through 10 {
                 @if ($start <= $end) {
-                    &.C#{$start}-#{$end} {
+                    &[col="#{$start}-#{$end}"] {
                         grid-column-start: $start;
                         grid-column-end: $end + 1;
                     }
 
-                    &.R#{$start}-#{$end} {
+                    &[row="#{$start}-#{$end}"] {
                         grid-row-start: $start;
                         grid-row-end: $end + 1;
                     }
@@ -255,93 +330,13 @@
 
     @for $col from 1 through 10 {
         @for $row from 1 through 10 {
+            $colRem: #{(($col - 1) / $col) * 2}rem;
+            $rowRem: #{(($row - 1) / $row) * 2}rem;
+
             &.C#{$col}-R#{$row} {
-                grid-template-columns: repeat($col, 1fr);
-                grid-template-rows: repeat($row, 1fr);
+                grid-template-columns: repeat($col, calc(100% / #{$col} - #{$colRem}));
+                grid-template-rows: repeat($row, calc(100% / #{$row} - #{$rowRem}));
             }
         }
     }
 }
-
-@keyframes Open-Toolbar {
-    0% {
-        grid-template-columns: 0 0 0 0 0 0 0 0 2rem;
-    }
-    10% {
-        grid-template-columns: 0.2rem 0.05rem 0.2rem 0.05rem 0.2rem 0.05rem 0.2rem 0.05rem 2rem;
-    }
-    20% {
-        grid-template-columns: 0.4rem 0.1rem 0.4rem 0.1rem 0.4rem 0.1rem 0.4rem 0.1rem 2rem;
-    }
-    30% {
-        grid-template-columns: 0.6rem 0.15rem 0.6rem 0.15rem 0.6rem 0.15rem 0.6rem 0.15rem 2rem;
-    }
-    40% {
-        grid-template-columns: 0.8rem 0.2rem 0.8rem 0.2rem 0.8rem 0.2rem 0.8rem 0.2rem 2rem;
-    }
-    50% {
-        grid-template-columns: 1rem 0.25rem 1rem 0.25rem 1rem 0.25rem 1rem 0.25rem 2rem;
-    }
-    60% {
-        grid-template-columns: 1.2rem 0.3rem 1.2rem 0.3rem 1.2rem 0.3rem 1.2rem 0.3rem 2rem;
-    }
-    70% {
-        grid-template-columns: 1.4rem 0.35rem 1.4rem 0.35rem 1.4rem 0.35rem 1.4rem 0.35rem 2rem;
-    }
-    80% {
-        grid-template-columns: 1.6rem 0.4rem 1.6rem 0.4rem 1.6rem 0.4rem 1.6rem 0.4rem 2rem;
-    }
-    90% {
-        grid-template-columns: 1.8rem 0.45rem 1.8rem 0.45rem 1.8rem 0.45rem 1.8rem 0.45rem 2rem;
-    }
-    100% {
-        grid-template-columns: 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem;
-    }
-}
-
-@keyframes Close-Toolbar {
-    100% {
-        grid-template-columns: 0 0 0 0 0 0 0 0 2rem;
-    }
-
-    90% {
-        grid-template-columns: 0.2rem 0.05rem 0.2rem 0.05rem 0.2rem 0.05rem 0.2rem 0.05rem 2rem;
-    }
-
-    80% {
-        grid-template-columns: 0.4rem 0.1rem 0.4rem 0.1rem 0.4rem 0.1rem 0.4rem 0.1rem 2rem;
-    }
-
-    70% {
-        grid-template-columns: 0.6rem 0.15rem 0.6rem 0.15rem 0.6rem 0.15rem 0.6rem 0.15rem 2rem;
-    }
-
-    60% {
-        grid-template-columns: 0.8rem 0.2rem 0.8rem 0.2rem 0.8rem 0.2rem 0.8rem 0.2rem 2rem;
-    }
-
-    50% {
-        grid-template-columns: 1rem 0.25rem 1rem 0.25rem 1rem 0.25rem 1rem 0.25rem 2rem;
-    }
-
-    40% {
-        grid-template-columns: 1.2rem 0.3rem 1.2rem 0.3rem 1.2rem 0.3rem 1.2rem 0.3rem 2rem;
-    }
-
-    30% {
-        grid-template-columns: 1.4rem 0.35rem 1.4rem 0.35rem 1.4rem 0.35rem 1.4rem 0.35rem 2rem;
-    }
-
-    20% {
-        grid-template-columns: 1.6rem 0.4rem 1.6rem 0.4rem 1.6rem 0.4rem 1.6rem 0.4rem 2rem;
-    }
-
-    10% {
-        grid-template-columns: 1.8rem 0.45rem 1.8rem 0.45rem 1.8rem 0.45rem 1.8rem 0.45rem 2rem;
-    }
-
-    0% {
-        grid-template-columns: 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem 0.5rem 2rem;
-    }
-}
-
