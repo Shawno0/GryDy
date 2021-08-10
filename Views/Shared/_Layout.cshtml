@@ -1,31 +1,70 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Dynamic Panel Grid Layout</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Grid Dynamix</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/grid-dynamix.css" />
 </head>
 <body>
-    <div class="Navbar">
-        <div class="Logo">
-
-        </div>
-        <div class="Product">
-            <span>Dynamic Panel Grid Layout</span>
-        </div>
-    </div>
-    <div class="body-content">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GridDynamix</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (ViewData["Title"].ToString() == "Home Page")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Grid Settings
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <div id="columns_spinner" class="dropdown-item settings-item">
+                                        <span>Columns</span>
+                                        <div class="spinner">
+                                            <button type="button" class="settings-button" onclick="UpdateGridDimensions('col', -1)">-</button>
+                                            <span></span>
+                                            <button type="button" class="settings-button" onclick="UpdateGridDimensions('col', 1)">+</button>
+                                        </div>
+                                    </div>
+                                    <div id="rows_spinner" class="dropdown-item settings-item">
+                                        <span>Rows</span>
+                                        <div class="spinner">
+                                            <button type="button" class="settings-button" onclick="UpdateGridDimensions('row', -1)">-</button>
+                                            <span></span>
+                                            <button type="button" class="settings-button" onclick="UpdateGridDimensions('row', 1)">+</button>
+                                        </div>
+                                    </div>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="main-content">
         @RenderBody()
-    </div>
-    <footer>
-        <div>
-            <p>&copy; @DateTime.Now.Year - Wilton-Brown</p>
+    </main>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Grid Dynamix
         </div>
     </footer>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/panels")
-    @RenderSection("scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/grid-dynamix.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
