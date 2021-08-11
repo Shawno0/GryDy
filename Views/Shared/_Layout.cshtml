@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GridDynamix</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Grid Dynamix</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,25 +26,24 @@
                                     Grid Settings
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <div id="columns_spinner" class="dropdown-item settings-item">
+                                    <div id="column_spinner" class="dropdown-item settings-item">
                                         <span>Columns</span>
                                         <div class="spinner">
-                                            <button type="button" class="settings-button" onclick="UpdateGridDimensions('col', -1)">-</button>
+                                            <button type="button" onclick="Grid.RemoveColumn();">-</button>
                                             <span></span>
-                                            <button type="button" class="settings-button" onclick="UpdateGridDimensions('col', 1)">+</button>
+                                            <button type="button" onclick="Grid.AddColumn();">+</button>
                                         </div>
                                     </div>
-                                    <div id="rows_spinner" class="dropdown-item settings-item">
+                                    <div id="row_spinner" class="dropdown-item settings-item">
                                         <span>Rows</span>
                                         <div class="spinner">
-                                            <button type="button" class="settings-button" onclick="UpdateGridDimensions('row', -1)">-</button>
+                                            <button type="button" onclick="Grid.RemoveRow();">-</button>
                                             <span></span>
-                                            <button type="button" class="settings-button" onclick="UpdateGridDimensions('row', 1)">+</button>
+                                            <button type="button" onclick="Grid.AddRow();">+</button>
                                         </div>
                                     </div>
-                                    <a class="dropdown-item" href="#">Another action</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <div id="model_container" class="dropdown-item"></div>
                                 </div>
                             </li>
                         }

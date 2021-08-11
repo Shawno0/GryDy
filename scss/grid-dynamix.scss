@@ -362,24 +362,59 @@
     }
 }
 
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 0.5rem;
+    min-width: 15rem;
+
+    .spinner {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-direction: row;
+        gap: 0.5rem;
+
+        button {
+            border: 1px solid #DFDFDF;
+            outline: none;
+            border-radius: 10%;
+            background-color: #FFF;
+            color: #DFDFDF;
+
+            &:hover {
+                background-color: #DFDFDF;
+                color: #FFF;
+            }
+        }
+    }
+}
+
 .grid-model {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 
-    & .row {
+    .row {
         display: flex;
         flex-direction: row;
         gap: 0.5rem;
 
-        & .cube {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 0.25rem;
+        .cube {
+            flex: 1 1 calc(10% - 0.5rem);
+            border-radius: 10%;
             border: solid 1px #DFDFDF;
+            height: 1rem;
 
             &.populated {
                 background-color: #DFDFDF;
+            }
+
+            &.open {
+                background-color: palegreen;
+                cursor: pointer;
             }
         }
     }

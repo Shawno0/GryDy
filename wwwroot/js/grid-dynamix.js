@@ -6,14 +6,77 @@ var Grid = null;
 var borders = { Top: "Top", Right: "Right", Bottom: "Bottom", Left: "Left" };
 var dimensionTypes = { Height: "Height", Width: "Width", Top: "Top", Right: "Right", Bottom: "Bottom", Left: "Left", Y: "Y", X: "X" };
 
-var _grid = function () {
+var _grid = function (modelContainer) {
+    this._ModelContainer = modelContainer;
+    this.ModelContainer = function () {
+        if (this._ModelContainer == null || this._ModelContainer == undefined) {
+            this._ModelContainer = $('#model_container');
+        }
+
+        return this._ModelContainer;
+    }
+    this._ColumnSpinner = null;
+    this.ColumnSpinner = function () {
+        if (this._ColumnSpinner == null || this._ColumnSpinner == undefined) {
+            this._ColumnSpinner = $('#column_spinner .spinner span')[0];
+        }
+
+        return this._ColumnSpinner;
+    }
+    this.RefreshColumnSpinner = function () {
+        this.ColumnSpinner().innerText = this.Columns();
+    }
+    this._RowSpinner = null;
+    this.RowSpinner = function () {
+        if (this._RowSpinner == null || this._RowSpinner == undefined) {
+            this._RowSpinner = $('#row_spinner .spinner span')[0];
+        }
+
+        return this._RowSpinner;
+    }
+    this.RefreshRowSpinner = function () {
+        this.RowSpinner().innerText = this.Rows();
+    }
+    this._Model = null;
+    this.Model = function () {
+        if (this._Model == null || this._Model == undefined) {
+            this._Model = new _gridModel(this);
+        }
+
+        return this._Model;
+    }
+    this._Matrix = null;
+    this.Matrix = function (refresh) {
+        if (this._Matrix == null || this._Matrix == undefined || refresh == true) {
+            var matrix = new Array(this.Rows());
+            for (var i = 0; i < this.Rows(); i++) {
+                matrix[i] = new Array(this.Columns());
+            }
+
+            for (var p = 0; p < this.Panels().length; p++) {
+                var panel = this.Panels()[p];
+                var firstRow = panel.FirstRow();
+                var lastRow = panel.LastRow();
+                var firstColumn = panel.FirstColumn();
+                var lastColumn = panel.LastColumn();
+                for (var r = firstRow - 1; r < lastRow; r++) {
+                    for (var c = firstColumn - 1; c < lastColumn; c++) {
+                        matrix[r][c] = 1;
+                    }
+                }
+            }
+
+            this._Matrix = matrix;
+        }
+
+        return this._Matrix;
+    }
     this.Element = document.getElementsByClassName('Panel-Grid')[0];
-    this._Panels = [];
     this.Dimensions = function () {
         return this.Element.getBoundingClientRect();
     }
     this.Columns = function () {
-        var result = parseInt(this.Element.classList[1].split('-')[0].split('')[1]);
+        var result = parseInt(this.Element.classList[1].split('-')[0].substring(1));
         return result;
     }
     this.ColumnGaps = parseInt(this.Columns() - 1);
@@ -21,9 +84,33 @@ var _grid = function () {
         var result = parseInt((this.Dimensions().width / this.Columns()) - (((this.ColumnGaps / this.Columns()) * 2) * parseFloat(getComputedStyle(document.documentElement).fontSize)));
         return result;
     }
-    this.MaxColumn = parseInt(this.Columns() + 1);
+    this.MaxColumn = function () {
+        return parseInt(this.Columns() + 1);
+    }
+    this.AddColumn = function () {
+        if (this.Columns() < 10) {
+            var dimensions = ('C' + this.MaxColumn() + '-R' + this.Rows());
+            this.Element.className = this.Element.classList[0] + ' ' + dimensions;
+
+            this.RefreshGrid();
+        }
+    }
+    this.RemoveColumn = function () {
+        if (this.Columns() > 1) {
+            for (var i = 0; i < this.Rows(); i++) {
+                if (this.Matrix()[i][this.Columns() - 1] == 1) {
+                    return;
+                }
+            }
+
+            var dimensions = ('C' + (this.Columns() - 1) + '-R' + this.Rows());
+            this.Element.className = this.Element.classList[0] + ' ' + dimensions;
+
+            this.RefreshGrid();
+        }
+    }
     this.Rows = function () {
-        var result = parseInt(this.Element.classList[1].split('-')[1].split('')[1]);
+        var result = parseInt(this.Element.classList[1].split('-')[1].substring(1));
         return result;
     }
     this.RowGaps = parseInt(this.Rows() - 1);
@@ -31,7 +118,32 @@ var _grid = function () {
         var result = parseInt((this.Dimensions().height / this.Rows()) - (((this.RowGaps / this.Rows()) * 2) * parseFloat(getComputedStyle(document.documentElement).fontSize)));
         return result;
     }
-    this.MaxRow = parseInt(this.Rows() + 1);
+    this.MaxRow = function () {
+        return parseInt(this.Rows() + 1);
+    }
+    this.AddRow = function () {
+        if (this.Rows() < 10) {
+            var dimensions = ('C' + this.Columns() + '-R' + this.MaxRow());
+            this.Element.className = this.Element.classList[0] + ' ' + dimensions;
+
+            this.RefreshGrid();
+        }
+    }
+    this.RemoveRow = function () {
+        if (this.Rows() > 1) {
+            for (var i = 0; i < this.Columns(); i++) {
+                if (this.Matrix()[this.Rows() - 1][i] == 1) {
+                    return;
+                }
+            }
+
+            var dimensions = ('C' + this.Columns() + '-R' + (this.Rows() - 1));
+            this.Element.className = this.Element.classList[0] + ' ' + dimensions;
+
+            this.RefreshGrid();
+        }
+    }
+    this._Panels = [];
     this.Panels = function () {
         if (this._Panels.length == 0) {
             for (var i = 0; i < this.Element.children.length; i++) {
@@ -41,63 +153,46 @@ var _grid = function () {
 
         return this._Panels;
     }
+    this.PanelCount = function () {
+        return parseInt(this.Panels().length);
+    }
     this.RefreshPanels = function () {
+        this._Panels = [];
         for (var i = 0; i < this.Element.children; i++) {
             this._Panels.push(new _panel(this.Element, this.Element.children[i]))
         }
     }
-    this.Map = function () {
-        var map = new Array();
+    this.InstantiatePanel = function (element) {
+        var id = this.PanelCount() + 1;
+        var html = '<div id="GPanel_' + id + '" class="GPanel" row="' + element.getAttribute('row') + '" col="' + element.getAttribute('col') + '" onmouseover="SelectPanel(this.id);" onmouseout="selectedPanel = null;">'
+            + '<div class="Corner"></div>'
+            + '<div class="Corner"></div>'
+            + '<div class="Corner"></div>'
+            + '<div class="Corner"></div>'
+            + '<div class="Border Top"></div>'
+            + '<div class="Border Right"></div>'
+            + '<div class="Border Bottom"></div>'
+            + '<div class="Border Left"></div>'
+            + '<div id="GPanel_' + id + '_Content" class="Content"></div>'
+            + '</div>';
 
-        for (var r = 0; r < this.Rows(); r++) {
-            for (var c = 0; c < this.Columns(); c++) {
-                map.push(new Array(r, c, 0));
-            }
-        }
+        var panel = $.parseHTML(html)[0];
 
-        for (var p = 0; p < this.Panels().length; p++) {
-            var panel = this.Panels()[p];
-            var firstRow = panel.FirstRow();
-            var lastRow = panel.LastRow();
-            var firstColumn = panel.FirstColumn();
-            var lastColumn = panel.LastColumn();
-            for (var r = firstRow - 1; r < lastRow; r++) {
-                for (var c = firstColumn - 1; c < lastColumn; c++) {
-                    for (var m = 0; m < map.length; m++) {
-                        var entry = map[m];
-                        if (entry[0] == r && entry[1] == c) {
-                            entry[2] = 1;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        this.Element.appendChild(panel);
 
-        return map;
+        this.RefreshGrid();
     }
-    this.PrintMap = function () {
-        //var map = this.Map();
-        //var mapString = '';
 
-        //for (var r = 0; r < this.Rows(); r++) {
-        //    for (var c = 0; c < this.Columns(); c++) {
-        //        for (var m = 0; m < map.length; m++) {
-        //            var entry = map[m];
-        //            if (entry[0] == r && entry[1] == c) {
-        //                mapString += '[' + (entry[2] == 1 ? '+' : '_') + ']';
-        //                if (c == this.Columns() - 1) {
-        //                    mapString += '\r\n';
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-        var model = new _gridModel(this.Map(), this.Rows(), this.Columns());
-
-        return model.Instantiate();
+    this.RefreshGrid = function () {
+        this.Model().Instantiate();
+        this.RefreshRowSpinner();
+        this.RefreshColumnSpinner();
+        this.RefreshPanels();
     }
+
+    this.Model().Instantiate();
+    this.RefreshRowSpinner();
+    this.RefreshColumnSpinner();
 }
 
 var _panel = function (grid, element, border) {
@@ -144,40 +239,47 @@ var _panel = function (grid, element, border) {
     }
 }
 
-var _gridModel = function (map, rows, cols) {
-    this._Map = map;
-    this._Rows = rows;
-    this._Columns = cols;
-    this._Model = '<div class="grid-model">{0}</div>';
-    this._Row = '<div class="row">{0}</div>';
-    this._Cube = function (populated) {
-        return '<div class="cube' + (populated ? ' pupulated' : '') + '"></div>';
+var _gridModel = function (grid) {
+    this._Grid = grid;
+    this._Element = function () {
+        return $(document.createElement('div')).addClass('grid-model');
     }
-    this.Instantiate = function () {
-        var rows = '';
+    this._Row = function () {
+        return $(document.createElement('div')).addClass('row');
+    }
+    this._Cube = function (populated, row, col) {
+        row++;
+        col++;
+        var cube = $(document.createElement('div'))
+            .attr('class', 'cube ' + (populated ? 'populated' : 'open'))
+            .attr('row', row + '-' + row)
+            .attr('col', col + '-' + col);
 
-        for (var r = 0; r < this._Rows; r++) {
-            rows += this._Row;
-            var cubes = '';
-            for (var c = 0; c < this._Columns; c++) {
-                for (var m = 0; m < map.length; m++) {
-                    var entry = map[m];
-                    if (entry[0] == r && entry[1] == c) {
-                        cubes += this._Cube(entry[2] == 1);
-                    }
-                }
-            }
-            rows.replace('{0}', cubes);
-            cubes = '';
+        if (!populated) {
+            cube.attr('onclick', 'Grid.InstantiatePanel(this);');
         }
 
-        return this._Model.replace('{0}', rows);
+        return cube;
+    }
+    this.Instantiate = function () {
+        var element = this._Element()
+        var matrix = this._Grid.Matrix(true);
+
+        for (var r = 0; r < matrix.length; r++) {
+            var row = this._Row();
+            for (var c = 0; c < matrix[0].length; c++) {
+                row.append(this._Cube(matrix[r][c] == 1, r, c));
+            }
+            element.append(row);
+        }
+
+        this._Grid.ModelContainer().empty();
+        this._Grid.ModelContainer().append(element);
     }
 }
 
 $(document).ready(function () {
     Grid = new _grid();
-    document.getElementById('Grid_Model').innerHTML = Grid.PrintMap();
 
     $(document.body).on("pointermove", function (e) {
         if (mPanel) {
@@ -289,16 +391,17 @@ $(document).ready(function () {
             rPanel.Element.style.height = null;
             rPanel.Element.style.width = null;
 
-            ClearPanel();
+            Clear_rPanel();
+            Grid.RefreshGrid();
         }
     });
 });
 
-function ClearmPanel() {
+function Clear_mPanel() {
     mPanel = null;
 }
 
-function ClearPanel() {
+function Clear_rPanel() {
     rPanel = null;
 }
 
@@ -319,7 +422,7 @@ function SwitchPanelPosition() {
         sPanel.setAttribute('col', oldGridPos[0]);
         sPanel.setAttribute('row', oldGridPos[1]);
 
-        ClearmPanel();
+        Clear_mPanel();
     }
 }
 
