@@ -4,7 +4,7 @@
   "description": "Compiles the SCSS file on build",
   "main": "index.js",
   "scripts": {
-    "build-css": "node-sass --include-path scss --output-style compressed scss/grid-dynamix.scss --output wwwroot/css"
+    "build-css": "node-sass --include-path scss --output-style compressed scss/grydy.scss --output wwwroot/css"
   },
   "author": "",
   "license": "ISC",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PeyMiGjzW0v42Wokos5sOs41QqqhS54bLHGvjevm+X8gzdRTE00A7TfJ2ynNl4BBTFF3KUA3CieyfpQ0QSyuBQ==",
+  "dgSpecHash": "5zqZBsodRCvXmyJhy24hJsFqVvcyoz1LxzWL9ykVDVUjn0x42fCEOmFXKI4ZwQsJEKNxC7RhYrVQWoKEe0FiTg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Shawno0\\source\\repos\\PanelGrid\\GridDynamix.csproj",
+  "projectFilePath": "C:\\Users\\Shawno0\\source\\repos\\GryDy\\GryDy.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Shawno0\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\3.1.17\\microsoft.aspnetcore.mvc.razor.extensions.3.1.17.nupkg.sha512",
     "C:\\Users\\Shawno0\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\3.1.17\\microsoft.aspnetcore.mvc.razor.runtimecompilation.3.1.17.nupkg.sha512",

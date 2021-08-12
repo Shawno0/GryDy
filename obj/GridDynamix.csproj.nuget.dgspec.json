@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Shawno0\\source\\repos\\PanelGrid\\GridDynamix.csproj": {}
+    "C:\\Users\\Shawno0\\source\\repos\\GryDy\\GridDynamix.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Shawno0\\source\\repos\\PanelGrid\\GridDynamix.csproj": {
+    "C:\\Users\\Shawno0\\source\\repos\\GryDy\\GridDynamix.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Shawno0\\source\\repos\\PanelGrid\\GridDynamix.csproj",
+        "projectUniqueName": "C:\\Users\\Shawno0\\source\\repos\\GryDy\\GridDynamix.csproj",
         "projectName": "GridDynamix",
-        "projectPath": "C:\\Users\\Shawno0\\source\\repos\\PanelGrid\\GridDynamix.csproj",
+        "projectPath": "C:\\Users\\Shawno0\\source\\repos\\GryDy\\GridDynamix.csproj",
         "packagesPath": "C:\\Users\\Shawno0\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Shawno0\\source\\repos\\PanelGrid\\obj\\",
+        "outputPath": "C:\\Users\\Shawno0\\source\\repos\\GryDy\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
