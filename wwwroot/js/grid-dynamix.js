@@ -184,10 +184,10 @@ var _grid = function (modelContainer) {
     }
 
     this.RefreshGrid = function () {
-        this.Model().Instantiate();
+        this.RefreshPanels();
         this.RefreshRowSpinner();
         this.RefreshColumnSpinner();
-        this.RefreshPanels();
+        this.Model().Instantiate();
     }
 
     this.Model().Instantiate();
