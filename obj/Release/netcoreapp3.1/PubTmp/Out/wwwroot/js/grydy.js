@@ -98,8 +98,16 @@ var _grid = function (modelContainer) {
     this.RemoveColumn = function () {
         if (this.Columns() > 1) {
             for (var i = 0; i < this.Rows(); i++) {
-                if (this.Matrix()[i][this.Columns() - 1] == 1) {
-                    return;
+                if (this.Matrix()[i][this.Columns() - 1] == 1) { //Check right column
+                    if (this.Matrix()[i][0] == 1) { //Check left column
+                        return;
+                    }
+
+                    if (i == (this.Rows() - 1)) { //The left column is free to remove, so shift everything left and continue column removal
+                        for (var p = 0; p < this.PanelCount(); p++) {
+                            this.Panels()[p].ShiftColumn();
+                        }
+                    }
                 }
             }
 
@@ -132,8 +140,16 @@ var _grid = function (modelContainer) {
     this.RemoveRow = function () {
         if (this.Rows() > 1) {
             for (var i = 0; i < this.Columns(); i++) {
-                if (this.Matrix()[this.Rows() - 1][i] == 1) {
-                    return;
+                if (this.Matrix()[this.Rows() - 1][i] == 1) { //Check bottom row
+                    if (this.Matrix()[0][i] == 1) { //Check top row;
+                        return;
+                    }
+
+                    if (i == (this.Columns() - 1)) { //The top row is free to remove, so shift everything up and continue row removal
+                        for (var p = 0; p < this.PanelCount(); p++) {
+                            this.Panels()[p].ShiftRow();
+                        }
+                    }
                 }
             }
 
@@ -238,6 +254,18 @@ var _panel = function (grid, element, border) {
     }
     this.SetActiveBorder = function (border) {
         this.ActiveBorder = border;
+    }
+    this.ShiftColumn = function () {
+        var cols = this.Columns();
+        if (cols[0] > 1) {
+            this.Element.setAttribute('col', (cols[0] - 1) + '-' + (cols[1] - 1));
+        }
+    }
+    this.ShiftRow = function () {
+        var rows = this.Rows();
+        if (rows[0] > 1) {
+            this.Element.setAttribute('row', (rows[0] - 1) + '-' + (rows[1] - 1));
+        }
     }
 }
 
